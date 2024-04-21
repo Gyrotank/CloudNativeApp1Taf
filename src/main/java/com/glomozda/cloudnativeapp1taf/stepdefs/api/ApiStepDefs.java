@@ -22,8 +22,8 @@ public class ApiStepDefs {
     @Autowired
     private AppProperties appProperties;
 
-    @When("User sends GET request to {}")
-    public void userSendsGetRequestToHome(final String endpoint) {
+    @When("User sends GET request to {string}")
+    public void userSendsGetRequestToEndpoint(final String endpoint) {
         String baseUrl = appProperties.getBaseUrl();
         requestSpecification = new RequestSpecBuilder().setBaseUri(baseUrl).build();
         response = given().spec(requestSpecification)
