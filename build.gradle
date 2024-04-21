@@ -1,0 +1,55 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.1'
+    id 'java'
+    id 'org.sonarqube' version '4.0.0.2929'
+}
+
+group = 'com.glomozda'
+version = '1.0-SNAPSHOT'
+
+def cucumberVersion = '7.14.0'
+def log4jVersion = '2.20.0'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-test"
+    implementation "io.cucumber:cucumber-core:${cucumberVersion}"
+    implementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    implementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    implementation "io.cucumber:cucumber-jvm:${cucumberVersion}"
+    implementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+    implementation "io.rest-assured:rest-assured:5.3.2"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    implementation "org.seleniumhq.selenium:selenium-java:4.13.0"
+    implementation "com.google.code.findbugs:jsr305:3.0.2"
+    implementation "org.checkerframework:checker-qual:3.38.0"
+    implementation "com.google.errorprone:error_prone_annotations:2.22.0"
+    implementation "com.google.j2objc:j2objc-annotations:2.8"
+    implementation "io.github.bonigarcia:webdrivermanager:5.5.3"
+    implementation "com.aventstack:extentreports:5.1.1"
+    implementation "tech.grasshopper:extentreports-cucumber7-adapter:1.14.0"
+    compileOnly "org.projectlombok:lombok"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    runtimeOnly "com.mysql:mysql-connector-j"
+    annotationProcessor "org.projectlombok:lombok"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+}
+
+test {
+    useJUnitPlatform()
+}
