@@ -4,11 +4,14 @@ import com.glomozda.cloudnativeapp1taf.properties.AppProperties;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.File;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.containsString;
@@ -29,6 +32,23 @@ public class ApiStepDefs {
         response = given().spec(requestSpecification)
                 .log().all()
                 .get(endpoint)
+                .then()
+                .log().status()
+                .extract().response();
+    }
+
+    @When("User sends POST request to {string} with multipart file {string} attached")
+    public void userSendsPostRequestToEndpointWithMultipartFile(final String endpoint, final String filename) {
+        File imageFile = new File("src/main/resources/testdata/" + filename);
+
+        String baseUrl = appProperties.getBaseUrl();
+        requestSpecification = new RequestSpecBuilder().setBaseUri(baseUrl)
+                .setContentType(ContentType.MULTIPART)
+                .addMultiPart("file", imageFile)
+                .build();
+        response = given().spec(requestSpecification)
+                .log().all()
+                .post(endpoint)
                 .then()
                 .log().status()
                 .extract().response();

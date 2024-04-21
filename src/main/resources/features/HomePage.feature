@@ -25,3 +25,9 @@ Feature: Home Page can be accessed
     When User sends GET request to "/image/BadLabel"
     Then User receives status code of 200
     And Response body contains text: "[ ]"
+
+  @api
+  Scenario: User uploads image file via API
+    When User sends POST request to "/image" with multipart file "TestImage.png" attached
+    Then User receives status code of 200
+    And Response body contains text: "-TestImage.png"
